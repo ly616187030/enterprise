@@ -140,7 +140,7 @@
                             <div class="media media-lg">
 
                                 <div class="media-left">
-                                    <a href="news/shownews.php?lang=cn&id=61" title="{{$v['title']}}" target='_self'>
+                                    <a href="{{url('new/shown/'.$v['id'])}}" title="{{$v['title']}}" target='_self'>
                                         <img class="media-object" data-original="{{asset($v['img'])}}?x-oss-process=image/resize,m_fill,h_120,w_200,limit_0" style="display: block;" alt="{{$v['title']}}" src="{{asset($v['img'])}}?x-oss-process=image/resize,m_fill,h_120,w_200,limit_0">
                                     </a>
                                 </div>
@@ -148,7 +148,7 @@
                                 <div class="media-body">
                                     <h4 class="media-heading">
                                         <span class="news_time">{{mb_substr($v['release_time'],0,10,'utf8')}}</span>
-                                        <a href="news/shownews.php?lang=cn&id=61" title="{{$v['title']}}" target='_self' >
+                                        <a href="{{url('new/shown/'.$v['id'])}}" title="{{$v['title']}}" target='_self' >
                                             {{mb_substr($v['title'],0,15,'utf8')}}
                                         </a>
                                     </h4>
@@ -163,7 +163,7 @@
                             <div class="media media-lg">
 
                                 <div class="media-left">
-                                    <a href="news/shownews.php?lang=cn&id=61" title="{{$v['title']}}" target='_self'>
+                                    <a href="{{url('new/shown/'.$v['id'])}}" title="{{$v['title']}}" target='_self'>
                                         <img class="media-object" data-original="{{asset($v['img'])}}?x-oss-process=image/resize,m_fill,h_120,w_200,limit_0" style="display: block;" alt="{{$v['title']}}" src="{{asset($v['img'])}}?x-oss-process=image/resize,m_fill,h_120,w_200,limit_0">
                                     </a>
                                 </div>
@@ -171,7 +171,7 @@
                                 <div class="media-body">
                                     <h4 class="media-heading">
                                         <span class="news_time">{{mb_substr($v['release_time'],0,10,'utf8')}}</span>
-                                        <a href="news/shownews.php?lang=cn&id=61" title="{{$v['title']}}" target='_self' >
+                                        <a href="{{url('new/shown/'.$v['id'])}}" title="{{$v['title']}}" target='_self' >
                                             {{mb_substr($v['title'],0,15,'utf8')}}
                                         </a>
                                     </h4>
