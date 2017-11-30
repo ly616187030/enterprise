@@ -1,0 +1,20 @@
+<?php
+
+Route::group(['middleware' => ['Index.menu']], function () {
+    Route::get('/', 'Home\IndexController@index');//首页
+    Route::get('/product', 'Home\ProductController@index');//产品页面
+    Route::get('/product/{id}', 'Home\ProductController@lists');//产品list页面
+    Route::get('/product/showpro/{id}', 'Home\ProductController@showpro');//产品show页面
+    Route::get('/service', 'Home\ServiceController@index');//专题页面
+});
+
+
+
+
+
+Route::group(['prefix' => 'admin'], function () {
+
+    Voyager::routes();
+
+    require (__DIR__ . '/admin.php');
+});

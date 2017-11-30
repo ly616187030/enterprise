@@ -1,0 +1,204 @@
+@extends('voyager::master')
+
+@if(isset($son_id))
+
+    @if(isset($id))
+
+        @section('page_title',Voyager::setting('admin_title') . " - 编辑子栏目")
+
+    @else
+
+        @section('page_title',Voyager::setting('admin_title') . " - 新增子栏目")
+    @endif
+
+@else
+
+    @if(isset($id))
+
+        @section('page_title',Voyager::setting('admin_title') . " - 编辑栏目")
+
+    @else
+
+        @section('page_title',Voyager::setting('admin_title') . " - 新增栏目")
+    @endif
+
+@endif
+
+
+
+@section('page_header')
+    <h1 class="page-title">
+        <i class="voyager-crop"></i> 栏目设置
+    </h1>
+    <link rel="stylesheet" type="text/css" href="{{ asset('dropify-master/css/dropify.min.css')}}">
+@stop
+
+@section('content')
+
+    <div class="page-content edit-add container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="panel panel-bordered">
+
+
+                    <form role="form" class="form-edit-add"
+                          @if(isset($son_id)) @if(isset($id)) action="{{url('admin/column-son/'.$id)}}"  @else action="{{url('admin/column-son')}}" @endif @else @if(isset($id)) action="{{url('admin/column/'.$id)}}" @else action="{{url('admin/column')}}" @endif @endif method="POST" enctype="multipart/form-data">
+
+                        @if(isset($son_id))
+
+                            @if(isset($id))
+
+                                {{ method_field("PUT") }}
+
+
+                            @endif
+
+                        @else
+
+                            @if(isset($id))
+
+                                {{ method_field("PUT") }}
+
+                            @endif
+
+                        @endif
+
+                        {{ csrf_field() }}
+
+                        <div class="panel-body">
+
+                            @if (count($errors) > 0)
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">栏目名称</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="请输入栏目名称" value="@if(isset($data->name)){{old('name', $data->name)}}@else{{old('name')}}@endif">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">栏目英文名称</label>
+                                    <input type="text" class="form-control" id="english" name="english" placeholder="请输入栏目英文名称" value="@if(isset($data->english)){{old('english', $data->english)}}@else{{old('english')}}@endif">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">栏目简单描述</label>
+                                    <input type="text" class="form-control" id="title_description" name="title_description" placeholder="请输入栏目简单描述" value="@if(isset($data->title_description)){{old('title_description', $data->title_description)}}@else{{old('title_description')}}@endif">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">SEO参数</label>
+                                    <input type="text" class="form-control" id="seo_title" name="seo_title" placeholder="请输入SEO参数" value="@if(isset($data->seo_title)){{old('seo_title', $data->seo_title)}}@else{{old('seo_title')}}@endif">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">关键词</label>
+                                    <input type="text" class="form-control" id="seo_keyword" name="seo_keyword" placeholder="请输入关键词" value="@if(isset($data->seo_keyword)){{old('seo_keyword', $data->seo_keyword)}}@else{{old('seo_keyword')}}@endif">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">SEO描述</label>
+                                    <textarea placeholder="请输入SEO描述" id="seo_description" name="seo_description" class="form-control">@if(isset($data->seo_description)){{old('seo_description', $data->seo_description)}}@else{{old('seo_description')}}@endif</textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">选择连接方式</label>
+                                    <select class="form-control" name="url_status" id="url_status">
+                                        <option value="1"  @if(isset($data->url_status)&&$data->url_status==1) selected @elseif(!isset($data->url_status)) selected @endif>内部连接</option>
+                                        <option value="2" @if(isset($data->url_status)&&$data->url_status==2) selected @endif>外部连接</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group link" @if(isset($data->url_status)&&$data->url_status==1) style="display: block" @elseif(!isset($data->url_status))  style="display: block" @else style="display: none" @endif>
+                                    <label class="col-md-2 control-label">内部连接地址</label>
+                                    <select class="form-control" name="url" id="url">
+                                        <option value=""></option>
+                                        <option value="product"  @if(isset($data->url)&&$data->url=='product') selected @endif>产品模块</option>
+                                        <option value="service" @if(isset($data->url)&&$data->url=='service') selected @endif>所有专题</option>
+                                        <option value="team" @if(isset($data->url)&&$data->url=='team') selected @endif>首席团队</option>
+                                        <option value="job" @if(isset($data->url)&&$data->url=='job') selected @endif>招聘信息</option>
+                                        <option value="contact" @if(isset($data->url)&&$data->url=='contact') selected @endif>联系我们</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group link_l"  @if(isset($data->url_status)&&$data->url_status==2) style="display: block" @elseif(!isset($data->url_status))  style="display: none"  @else style="display: none"  @endif>
+                                    <label class="col-md-2 control-label">外部连接地址</label>
+                                    <input type="text" class="form-control" id="link" name="link" placeholder="请输入外部连接地址" value="@if(isset($data->link)){{old('link', $data->link)}}@else{{old('link')}}@endif">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">栏目排序</label>
+                                    <input type="number" class="form-control" id="sort" name="sort" placeholder="请输入栏目排序" value="@if(isset($data->sort)){{old('sort', $data->sort)}}@else{{old('sort')}}@endif">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label">是否显示</label>
+                                    <input type="radio" id="navigation1" name="navigation" value="1"  @if(isset($data->navigation)&&$data->navigation==1) checked @elseif(!isset($data->navigation)) checked @endif>
+                                    <label for="navigation1">&nbsp;&nbsp;&nbsp;是</label>
+                                    <input type="radio" id="navigation_1" style="margin-left: 30px;" name="navigation" value="-1"  @if(isset($data->navigation)&&$data->navigation==-1) checked @endif>
+                                    <label for="navigation_1">&nbsp;&nbsp;&nbsp;否</label>
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">是否打开新窗口</label>
+                                    <input type="radio" id="target1" name="target" value="1"  @if(isset($data->target)&&$data->target==1) checked @endif>
+                                    <label for="target1">&nbsp;&nbsp;&nbsp;是</label>
+                                    <input type="radio" id="target_1" style="margin-left: 30px;" name="target" value="-1"  @if(isset($data->target)&&$data->target==-1) checked @elseif(!isset($data->target)) checked @endif>
+                                    <label for="target_1">&nbsp;&nbsp;&nbsp;否</label>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label  class="col-md-4 control-label" for="header_pic">背景图  &nbsp;&nbsp;&nbsp;  <code>提示：最大限2M 图片宽高比 6:1</code></label>
+                                    <input type="file" class="dropify"  id="header_pic" data-max-file-size="2M" name="header_pic" data-default-file="@if(isset($data->header_pic)){{asset($data->header_pic)}}@endif"  value="">
+                                </div>
+
+                        </div>
+
+
+                        <div class="panel-footer">
+                            <button type="button" class="btn btn-primary save">
+                                @if(isset($son_id))  @if(isset($id)) 更新子栏目 @else 保存子栏目 @endif @else @if(isset($id))  更新栏目 @else 保存栏目 @endif @endif
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+
+@section('javascript')
+    <script type="text/javascript" src="{{ asset('dropify-master/js/dropify.min.js') }}"></script>
+    <script type="text/javascript">
+
+        $("#url_status").change(function(){var val = $(this).find("option:selected").val();if(val == 1){$('.link_l').hide();$('.link').show();$('#url').val('')}else{$('.link').hide();$('.link_l').show();$('#link').val('')}});
+
+        $('#header_pic').dropify({
+            messages: {
+                'default': '点击或拖拽来上传商品图',
+                'replace': '点击或拖拽图片到这里来替换图片',
+                'remove':  '移除图片',
+                'error': '对不起，你上传的图片太大了',
+            }
+        });
+
+        $('.save').click(function () { var val = $('#url_status').find("option:selected").val();if(val == 1){if($('#url').val() == ''){toastr.error('内部连接不能为空');} }else{ if($('#link').val() == ''){ toastr.error('外部连接不能为空');}}if(val == 1 && $('#url').val() != ''|| val == 2 && $('#link').val() != ''){ $('.form-edit-add').submit();}});
+
+    </script>
+
+
+@stop

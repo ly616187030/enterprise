@@ -1,0 +1,2 @@
+<link rel='stylesheet' href='{{asset('home/index/css/metinfo.css')}}'>
+<script src="https://use.fontawesome.com/213962e26a.js"></script>

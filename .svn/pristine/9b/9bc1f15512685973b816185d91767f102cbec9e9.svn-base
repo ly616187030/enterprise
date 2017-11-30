@@ -1,0 +1,23 @@
+<?php
+
+Route::group(['middleware' => ['Index.menu']], function () {
+    Route::get('/', 'Home\IndexController@index');
+
+});
+
+
+
+
+
+Route::group(['prefix' => 'admin'], function () {
+
+    Voyager::routes();
+
+    Route::group(['middleware' => 'admin.user', 'namespace' => 'Admin'], function () {
+
+        //栏目管理
+        Route::resource('column', 'ColumnController');
+
+
+    });
+});

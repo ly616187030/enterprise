@@ -1,0 +1,20 @@
+<?php
+
+Route::group(['middleware' => ['Index.menu']], function () {
+    Route::get('/', 'Home\IndexController@index');
+    Route::get('/product', 'Home\ProductController@index');
+    Route::get('/product/{id}', 'Home\ProductController@lists');
+    Route::get('/product/showpro/{id}', 'Home\ProductController@showpro');
+    Route::get('/service', 'Home\ServiceController@index');
+});
+
+
+
+
+
+Route::group(['prefix' => 'admin'], function () {
+
+    Voyager::routes();
+
+    require (__DIR__ . '/admin.php');
+});

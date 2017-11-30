@@ -1,0 +1,81 @@
+@if ($paginator->hasPages())
+    <style>
+        .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+            z-index: 3;
+            color: #fff;
+            cursor: default;
+            background-color: #1a1b1f;
+            border-color: #666;
+        }
+        .pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+            z-index: 2;
+            color: #1a1b1f;
+            background-color: #f3f7f9;
+            border-color: #ddd;
+        }
+        .pagination>.disabled>a, .pagination>.disabled>a:focus, .pagination>.disabled>a:hover, .pagination>.disabled>span, .pagination>.disabled>span:focus, .pagination>.disabled>span:hover {
+            color: #ccd5db;
+            cursor: pointer;
+            background-color: transparent;
+            border-color: #e4eaec;
+        }
+        .pagination-sm>li>a, .pagination-sm>li>span {
+            padding: 6px 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .pager .previous>a, .pager .previous>span {
+            float: left;
+            margin-left: 80%;
+        }
+        .pager .next>a, .pager .next>span {
+            float: right;
+            margin-right: 80%;
+        }
+        .pager li>a, .pager li>span {
+            display: inline-block;
+            padding: 5px 14px;
+            background-color: transparent;
+            border: 1px solid #e4eaec;
+            border-radius: 30px;
+        }
+        .pager li>a:focus, .pager li>a:hover {
+            text-decoration: none;
+            background-color: #eeeeee;
+        }
+    </style>
+    <ul class="pager">
+        {{-- Previous Page Link --}}
+        @if ($paginator->onFirstPage())
+            <li class="previous disabled"><span> Previous </span></li>
+        @else
+            <li class="previous"><a href="{{ $paginator->previousPageUrl() }}" rel="prev"> Previous </a></li>
+        @endif
+
+        {{-- Pagination Elements --}}
+        {{--@foreach ($elements as $element)
+            --}}{{-- "Three Dots" Separator --}}{{--
+            @if (is_string($element))
+                <li class="disabled"><span>{{ $element }}</span></li>
+            @endif
+
+            --}}{{-- Array Of Links --}}{{--
+            @if (is_array($element))
+                @foreach ($element as $page => $url)
+                    @if ($page == $paginator->currentPage())
+                        <li class="active"><span>{{ $page }}</span></li>
+                    @else
+                        <li><a href="{{ $url }}">{{ $page }}</a></li>
+                    @endif
+                @endforeach
+            @endif
+        @endforeach--}}
+
+        {{-- Next Page Link --}}
+        @if ($paginator->hasMorePages())
+            <li class="next"><a href="{{ $paginator->nextPageUrl() }}" rel="next"> Next </a></li>
+        @else
+            <li class="next disabled"><span> Next </span></li>
+        @endif
+    </ul>
+@endif

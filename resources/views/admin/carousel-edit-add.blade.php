@@ -1,0 +1,116 @@
+@extends('voyager::master')
+
+
+ @if(isset($id))
+
+        @section('page_title',Voyager::setting('admin_title') . " - 编辑图片")
+
+@else
+
+    @section('page_title',Voyager::setting('admin_title') . " - 新增图片")
+
+@endif
+
+
+
+@section('page_header')
+    <h1 class="page-title">
+        <i class="voyager-images"></i> @if(isset($id)) 编辑图片 @else 新增图片 @endif
+    </h1>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('dropify-master/css/dropify.min.css')}}">
+
+@stop
+
+@section('content')
+
+    <div class="page-content edit-add container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="panel panel-bordered">
+
+                    <div class="panel-body">
+
+                        @include('admin.error')
+
+                     <form role="form" class="form-edit-add"  @if(isset($id)) action="{{url('admin/carousel/'.$id)}}" @else action="{{url('admin/carousel')}}" @endif   method="POST" enctype="multipart/form-data">
+
+                         @if(isset($id))
+
+                             {{ method_field("PUT") }}
+
+                         @endif
+
+                         {{ csrf_field() }}
+
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">轮播图名称</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="请输入轮播图名称" value="@if(isset($data->name)){{old('name', $data->name)}}@else{{old('name')}}@endif">
+                        </div>
+
+                             <div class="form-group">
+                                 <label class="col-md-2 control-label">连接地址</label>
+                                 <input type="text" class="form-control" id="herf" name="herf" placeholder="连接地址可以为空" value="@if(isset($data->herf)){{old('herf', $data->herf)}}@else{{old('herf')}}@endif">
+                             </div>
+
+                        <div class="form-group">
+
+                            <div class="form-group">
+                                <label  class="col-md-8 control-label" for="header_pic">轮播图片  &nbsp;&nbsp;&nbsp;  <code>提示：禁止上传带中文名称图片，最大限2M 图片像素：1920 x 800</code></label>
+                                <input type="file" class="dropify"  id="img" data-max-file-size="2M" name="img" data-default-file="@if(isset($data->img)){{asset($data->img)}}@endif"  value="">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">图片排序</label>
+                            <input type="number" class="form-control" id="sort" name="sort" placeholder="请输入图片排序" value="@if(isset($data->sort)){{old('sort', $data->sort)}}@else{{old('sort')}}@endif">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">图片状态</label>
+                            <input type="radio" id="state" name="state" value="-1"  @if(isset($data->state)&&$data->state==-1) checked @endif>
+                            <label for="state">&nbsp;&nbsp;&nbsp;待审核</label>
+                            <input type="radio" id="state_1" style="margin-left: 30px;" name="state" value="1"  @if(isset($data->state)&&$data->state==1) checked @elseif(!isset($data->state)) checked @endif>
+                            <label for="state_1">&nbsp;&nbsp;&nbsp;展示</label>
+                        </div>
+
+                        <div class="panel-footer">
+                            <button type="submit" class="btn btn-primary">
+
+                                 @if(isset($id)) 编辑图片 @else 新增图片 @endif
+
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+@endsection
+
+
+@section('javascript')
+
+    <script type="text/javascript" src="{{ asset('dropify-master/js/dropify.min.js') }}"></script>
+
+    <script type="text/javascript">
+
+        $('#img').dropify({
+            messages: {
+                'default': '点击或拖拽来上传轮播图',
+                'replace': '点击或拖拽图片到这里来替换图片',
+                'remove':  '移除图片',
+                'error': '对不起，你上传的图片太大了',
+            }
+        });
+
+    </script>
+
+
+    @stop

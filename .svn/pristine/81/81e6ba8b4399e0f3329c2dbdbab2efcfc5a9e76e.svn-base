@@ -1,0 +1,101 @@
+@extends('voyager::master')
+
+
+ @if(isset($id))
+
+        @section('page_title',Voyager::setting('admin_title') . " - 编辑步骤")
+
+@else
+
+    @section('page_title',Voyager::setting('admin_title') . " - 新增步骤")
+
+@endif
+
+
+
+@section('page_header')
+    <h1 class="page-title">
+        <i class="voyager-pie-chart"></i> @if(isset($id)) 编辑步骤 @else 新增步骤 @endif
+    </h1>
+
+@stop
+
+@section('content')
+
+    <div class="page-content edit-add container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="panel panel-bordered">
+
+                    <div class="panel-body">
+
+                        @include('admin.error')
+
+                     <form role="form" class="form-edit-add"  @if(isset($id)) action="{{url('admin/step/'.$id)}}" @else action="{{url('admin/step')}}" @endif   method="POST">
+
+                         @if(isset($id))
+
+                             {{ method_field("PUT") }}
+
+                         @endif
+
+                         {{ csrf_field() }}
+
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">标题名称</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题名称" value="@if(isset($data->title)){{old('title', $data->title)}}@else{{old('title')}}@endif">
+                        </div>
+
+                        <div class="form-group">
+                             <label class="col-md-6 control-label">字体图表 &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ route('voyager.compass.index', [], false) }}#fonts" target="_blank">请点击选择字体图表</a> </label>
+                             <input type="text" class="form-control" id="icon" name="icon" placeholder="请输入字体图表" value="@if(isset($data->icon)){{old('icon', $data->icon)}}@else{{old('icon')}}@endif">
+                        </div>
+
+                        <div class="form-group">
+                              <label class="col-md-6 control-label">请选择显示背景颜色 </label>
+                              <input type="color" class="form-control" id="m_color" name="color" placeholder="请选择显示背景颜色" value="@if(isset($data->color)){{old('color', $data->color)}}@else{{old('color')}}@endif">
+                        </div>
+
+                        <div class="form-group">
+                              <label class="col-md-2 control-label">内容描述</label>
+                             <textarea placeholder="请输入内容描述" id="describe" name="describe" class="form-control">@if(isset($data->describe)){{old('describe', $data->describe)}}@else{{old('describe')}}@endif</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">跳转地址</label>
+                            <input type="text" class="form-control" id="href" name="href" placeholder="请输入跳转地址" value="@if(isset($data->href)){{old('href', $data->href)}}@else{{old('href')}}@endif">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">专题排序</label>
+                            <input type="number" class="form-control" id="sort" name="sort" placeholder="请输入栏目排序" value="@if(isset($data->sort)){{old('sort', $data->sort)}}@else{{old('sort',10)}}@endif">
+                        </div>
+
+                        <div class="panel-footer">
+                            <button type="submit" class="btn btn-primary save">
+
+                                 @if(isset($id)) 编辑步骤 @else 新增步骤 @endif
+
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+@endsection
+
+
+@section('javascript')
+
+   <script type="text/javascript">
+
+    </script>
+
+
+    @stop

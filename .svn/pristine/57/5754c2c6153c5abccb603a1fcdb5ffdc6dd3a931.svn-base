@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Http\Controllers\Home;
+
+use App\Http\Controllers\Controller;
+use App\Model\NavModel;
+
+class ProductController extends Controller
+{
+    public function index(){
+        $anli = setting('site.product');
+        $urls = NavModel::where('id', $anli)->value('url_status');
+        if($urls==1){
+            $active = NavModel::where('id', $anli)->value('url');
+        }else{
+            $active = NavModel::where('id', $anli)->value('link');
+        }
+        return view('Home.Product.index',compact('active'));
+    }
+}

@@ -1,0 +1,22 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: admin
+ * Date: 2017/11/26
+ * Time: 下午2:27
+ */
+
+Voyager::routes();
+
+Route::group(['middleware' => 'admin.user','namespace' => 'Admin'],function (){
+
+
+       //栏目管理
+           Route::resource('column','ColumnController');
+
+
+
+
+
+
+});

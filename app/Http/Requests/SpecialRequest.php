@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class SpecialRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'title' => 'required|unique:special',
+            'img' => 'required',
+            'content' => 'required',
+            'sort' => 'required',
+            'dec' => 'required',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'title.required'=>'专题名称不能为空',
+            'title.unique'=>'提示：专题名称已成功添加',
+            'img.required'=>'专题封面小图不能为空',
+            'content.required'=>'专题内容不能为空',
+            'sort.required'=>'排序不能为空',
+            'dec.required'=>'专题描述不能为空',
+        ];
+    }
+}

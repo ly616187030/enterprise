@@ -1,0 +1,162 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Model\NavModel;
+use App\Model\TeamModel;
+use App\Http\Requests\TeamRequest;
+use Illuminate\Support\Facades\Auth;
+
+class TeamController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+        $id = [];
+
+        $nav = NavModel::where('pid',setting('site.team'))->select('id')->get()->toArray();
+
+        foreach ($nav as $v => $n){
+
+            array_push($id,$n['id']);
+
+        }
+
+        $data = TeamModel::whereIn('pid',$id)->get();
+
+        return view('admin.team',['data' => $data]);
+
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+        $nav = NavModel::where('pid',setting('site.team'))->get();
+
+        return view('admin.team-edit-add',['nav' => $nav]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(TeamRequest $request)
+    {
+        //
+        $data = $request->except('_token');
+
+        $file = $data['img'];
+
+        $path = public_path('team');
+
+        $newName = 'special-'.time().rand(10, 99).'-'.$file->getClientOriginalName();
+
+        $file->move($path,$newName);
+
+        $data['img'] =  'team/'.$newName;
+
+        TeamModel::insert($data);
+
+            return back()->with([
+                'message'    => '新增成功',
+                'alert-type' => 'success',
+            ]);
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+        $data = TeamModel::where('id',$id)->first();
+
+        $nav = NavModel::where('pid',setting('site.team'))->get();
+
+        return view('admin.team-edit-add',['nav' => $nav,'data' => $data,'id' => $id]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+        $data = $request->except('_token','_method');
+
+        if(isset($data['img'])){
+
+            $file = $data['img'];
+
+            $path = public_path('team');
+
+            $newName = 'nav-'.time().rand(10, 99).'-'.$file->getClientOriginalName();
+
+            $file->move($path,$newName);
+
+            $data['img'] =  'team/'.$newName;
+
+        }
+
+            TeamModel::where('id',$id)->update($data);
+
+            return back()->with([
+                'message'    => '更新成功',
+                'alert-type' => 'success',
+            ]);
+
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+        if(TeamModel::where('id',$id)->delete()){
+
+            return back()->with([
+                'message'    => '删除成功',
+                'alert-type' => 'success',
+            ]);
+
+        }
+    }
+}

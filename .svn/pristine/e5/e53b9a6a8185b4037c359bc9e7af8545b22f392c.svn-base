@@ -1,0 +1,25 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: admin
+ * Date: 2017/11/26
+ * Time: 下午2:27
+ */
+
+Route::group(['middleware' => 'admin.user', 'namespace' => 'Admin'], function () {
+
+    Route::resource('column', 'ColumnController');
+    Route::resource('column-son', 'ColumnSonController');
+    Route::match(['get','post'],'goods-img', 'GoodsController@img');
+    Route::match(['get','post'],'goods-delete', 'GoodsController@delete_img');
+    Route::post('details','GoodsController@details');
+    Route::resource('goods', 'GoodsController');
+    Route::resource('special', 'SpecialController');
+    Route::resource('team', 'TeamController');
+    Route::resource('contact', 'ContactController');
+    Route::resource('recruit', 'RecruitController');
+    Route::resource('news', 'NewsController');
+    Route::resource('carousel', 'CarouselController');
+
+
+});

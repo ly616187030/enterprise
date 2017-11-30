@@ -1,0 +1,9 @@
+<div class="panel widget center bgimage" style="margin-bottom:0;overflow:hidden;background-image:url('{{ $image }}');">
+    <div class="dimmer"></div>
+    <div class="panel-content">
+       <i class='{{ $icon }}'></i>
+        <h4>大撒的</h4>
+        <p>大撒的盛大的</p>
+        <a href="{{ $button['link'] }}" class="btn btn-primary">{!! $button['text'] !!}</a>
+    </div>
+</div>

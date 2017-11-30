@@ -1,0 +1,6 @@
+<?php
+
+Route::group(['middleware' => ['Index.menu']], function () {
+    Route::get('/', 'Home\IndexController@index');
+
+});

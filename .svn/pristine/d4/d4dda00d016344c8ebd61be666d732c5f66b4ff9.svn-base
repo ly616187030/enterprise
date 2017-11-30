@@ -1,0 +1,142 @@
+@extends('HomeLayout.layout')
+@section('title','首页')
+@section('description','描述')
+@section('keywords','关键字')
+
+@section('main')
+
+    {{--BANNER S--}}
+    <div class="met-banner " data-height='||'>
+        <div class="slick-slide">
+            <img class="cover-image" src="{{asset('home/index/img/1494470276.jpg')}}" srcset='{{asset('home/index/img/1494470276.jpg')}} 500w,{{asset('home/index/img/1494470276.jpg')}}' sizes="(max-width: 767px) 500px" alt="">
+        </div>
+        <div class="slick-slide">
+            <img class="cover-image" data-lazy="{{asset('home/index/img/1494487223.jpg')}}" srcset='{{asset('home/index/img/1494487223.jpg')}} 500w,{{asset('home/index/img/1494487223.jpg')}}' sizes="(max-width: 767px) 500px" alt="">
+        </div>
+        <div class="slick-slide">
+            <img class="cover-image" data-lazy="{{asset('home/index/img/1494486070.jpg')}}" srcset='{{asset('home/index/img/1494486070.jpg')}} 500w,{{asset('home/index/img/1494486070.jpg')}}' sizes="(max-width: 767px) 500px" alt="">
+        </div>
+    </div>
+    {{--BANNER E--}}
+
+    {{--项目案例 S--}}
+    @if($anlidata!='')
+    <div class="met-index-product met-index-body">
+        <div class="container">
+            <h3 class="invisible" data-plugin="appear" data-animate="fade" data-repeat="false">{{$anlidata['name']}}</h3>
+            <p class="desc invisible animation-delay-100" data-plugin="appear" data-animate="fadeInDown" data-repeat="false">—— {{$anlidata['english']}}——</p>
+            <p class="desc invisible animation-delay-200" data-plugin="appear" data-animate="fadeInDown" data-repeat="false">{{$anlidata['title_description']}}</p>
+            <div class='invisible animation-delay-300' data-plugin="appear" data-animate="fadeInUp" data-repeat="false">
+                <ul class="nav nav-tabs">
+                    @foreach($anlidata['child'] as $v)
+                        <li>
+                            <a href="{{$v['url_status']==1?$v['url']:$v['link']}}" target="{{$v['url_status']==1?'_self':'_blank'}}" title="{{$v['name']}}">{{$v['name']}}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="slider index_product animation-delay-400" id="product_list" data-show="2 2 4 4 " data-plugin="appear" data-animate="slide-bottom" data-repeat="false" >
+                <div data-type="list_114" >
+                    <div class="widget widget-shadow">
+                        <figure class="widget-header cover">
+                            <a href="product/showproduct.php?lang=cn&id=41" title="Allen Key 住宅" target='_self'>
+                                <div class="mask">
+                                </div>
+                                <img class="img-responsive" alt="Allen Key 住宅" src="{{asset('home/index/img/1494320796.jpg')}}"/>
+                            </a>
+                        </figure>
+                        <h4 class="widget-title">
+                            <a href="product/showproduct.php?lang=cn&id=41" title="Allen Key 住宅" target='_self'>Allen Key 住宅</a>
+                            <p></p>
+                        </h4>
+                    </div>
+                </div>
+                <!-- End Example Lazy Loading -->
+            </div>
+
+            <a href="{{$anlidata['url_status']==1?$anlidata['url']:$anlidata['link']}}" target="{{$anlidata['url_status']==1?'_self':'_blank'}}" class="index_more"></a>
+            <a href="{{$anlidata['url_status']==1?$anlidata['url']:$anlidata['link']}}" target="{{$anlidata['url_status']==1?'_self':'_blank'}}" class="more">MORE</a>
+        </div>
+    </div>
+    @endif
+    {{--项目案例 E--}}
+
+    {{--关于我们 S--}}
+    @if($gydata!='')
+    <div class="met-index-about met-index-body">
+        <div class="container ">
+            <div class="about_img col-sm-12 col-md-4 col-lg-4 invisible" data-animate="zoomIn" data-plugin="appear" data-repeat="false">
+                <img data-original="{{asset('home/index/img/1494497736.png')}}" src="{{asset('home/index/img/1494497736.png')}}" class="imgload">
+            </div>
+            <div class="about_cont col-sm-12 col-md-8 col-lg-8">
+                <h3 class="invisible" data-plugin="appear" data-animate="fade" data-repeat="false">关于我们</h3>
+                <p class="desc invisible animation-delay-100" data-plugin="appear" data-animate="fadeInDown" data-repeat="false" >ABOUT US</p>
+                <p class="desc invisible animation-delay-200" data-plugin="appear" data-animate="fadeInDown" data-repeat="false">{{$gydata['title_description']}}</p>
+                <div class="met-editor no-gallery lazyload clearfix invisible animation-delay-300" data-plugin="appear" data-animate="fadeInDown" data-repeat="false">
+                    我们整个团队是一支诚信负责、团结进取、高效务实开拓型的精英团队。在团队的努力下，2008年成长为建筑行业建筑工程结构设计事务所甲级企业。基于“用心、诚信”的经营原则，服务各类顾客的丰富经验，日益完善的经营和服务体系，玖鼎正合致力于成为西南一流的工程优化设计服务公司，为顾客提供最优质的服务。基于“专业、合理”的设计原则，baubaus拥有一批专业素质极强的设计团队，在所设计的作品中都能取得最优的结构体系和工程设计经济指标。
+                </div>
+                <a href="{{$gydata['url_status']==1?$gydata['url']:$gydata['link']}}" target="{{$gydata['url_status']==1?'_self':'_blank'}}" class="more" data-animate="bounceIn"></a>
+            </div>
+        </div>
+    </div>
+    @endif
+    {{--关于我们 E--}}
+
+    {{--咨询中心 S--}}
+    @if($zxdata!='')
+    <div class="met-index-news met-index-body">
+        <div class="container">
+            <h3 class="invisible" data-plugin="appear" data-animate="fade" data-repeat="false">{{$zxdata['name']}}</h3>
+            <p class="desc invisible animation-delay-100" data-plugin="appear" data-animate="fadeInDown" data-repeat="false">—— {{$zxdata['english']}} ——</p>
+            <p class="desc invisible animation-delay-200" data-plugin="appear" data-animate="fadeInDown" data-repeat="false">{{$zxdata['title_description']}}</p>
+            <ul class="blocks-2" data-scale='0.6'>
+
+                <li class="invisible animation-delay-300" data-plugin="appear" data-animate="fadeInRight" data-repeat="false">
+                    <div class="media media-lg">
+
+                        <div class="media-left">
+                            <a href="news/shownews.php?lang=cn&id=61" title="2016年中国经济数据公布 GDP总量料破70万亿元" target='_self'>
+                                <img class="media-object" data-original="{{asset('home/index/img/1494484395.jpg')}}?x-oss-process=image/resize,m_fill,h_120,w_200,limit_0" style="display: block;" alt="2016年中国经济数据公布 GDP总量料破70万亿元" src="{{asset('home/index/img/1494484395.jpg')}}?x-oss-process=image/resize,m_fill,h_120,w_200,limit_0">
+                            </a>
+                        </div>
+
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <span class="news_time">2017-05-11</span>
+                                <a href="news/shownews.php?lang=cn&id=61" title="2016年中国经济数据公布 GDP总量料破70万亿元" target='_self' >
+                                    2016年中国经济数据公布 GDP总量料破70万亿元
+                                </a>
+                            </h4>
+                            <p class="des">按照日程安排，国家统计局今日将公布2016年国内生产总值(GDP)等重磅数据。根据官方预测，2016.....</p>
+                            <p class="info">
+                            </p>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+            <a href="{{$zxdata['url_status']==1?$zxdata['url']:$zxdata['link']}}" target="{{$zxdata['url_status']==1?'_self':'_blank'}}"  class="more" title="博客新闻"></a>
+        </div>
+    </div>
+    @endif
+    {{--咨询中心 E--}}
+
+    {{--友情链接 S--}}
+    <div class="met-links text-center">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li>友情链接 :</li>
+
+                <li><a href="http://" title="" target="_blank" class="link_img"><img src="{{asset('home/index/img/1501037507.png')}}"></a></li>
+
+                <li><a href="http://" title="" target="_blank" class="link_img"><img src="{{asset('home/index/img/1501037089.png')}}"></a></li>
+
+                <li><a href="http://" title="" target="_blank" class="link_img"><img src="{{asset('home/index/img/1501037030.png')}}"></a></li>
+
+                <li><a href="http://" title="" target="_blank" class="link_img"><img src="{{asset('home/index/img/1501036985.png')}}"></a></li>
+
+            </ol>
+        </div>
+    </div>
+    {{--友情链接 E--}}
+@stop

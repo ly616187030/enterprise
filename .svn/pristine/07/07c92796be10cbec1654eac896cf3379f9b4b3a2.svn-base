@@ -1,0 +1,103 @@
+@extends('HomeLayout.layout')
+@section('title',$nav['name'])
+@section('description',$nav['seo_keyword'])
+@section('keywords',$nav['seo_description'])
+
+@section('main')
+    <div class="met-banner " data-height='300||'>
+        <div class="slick-slide">
+            <img class="cover-image" src="{{asset($nav['header_pic'])}}" height="300" alt="">
+            <div class="banner-text p-5">
+                <div class='container'>
+                    <div class='banner-text-con'>
+                        <div>
+                            <h1 style="color:#fff;">{{$nav['name']}}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="met-column-nav product-search-body bordernone">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-9 sidebar_tile">
+                    <ul class="met-column-nav-ul">
+                        <li><a href="{{$nav['url_status']==1?url($nav['url']):$nav['link']}}" target="{{$nav['target']==1?'_blank':'_self'}}" class="link active"  title="全部">全部</a></li>
+                        @foreach($nav['child'] as $v)
+                            <li>
+                                <a href="{{$v['url_status']==1?url($v['url'].'/'.$v['id']):$v['link']}}" target="{{$v['target']==1?'_blank':'_self'}}" title="{{$v['name']}}" class="link">{{$v['name']}}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+
+                <div class="col-md-3 product_search ">
+                    <form method="get" action="{{url($nav['url'])}}">
+                        <div class="form-group">
+                            <div class="input-search">
+                                <button type="submit" class="input-search-btn"><i class="icon wb-search" aria-hidden="true"></i></button>
+                                <input type="text" class="form-control" name="content" value="{{$content}}" placeholder="Search">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="met-product animsition type-1">
+        <div class="container">
+            <div class='row'>
+                @if(count($cp)==0)
+                    @if($content!='')
+                        <div class="bg-white height-400 padding-top-50 text-center">
+                            <h1 class="page-search-title">
+                                没有含有 {{$content}} 的信息内容…
+                            </h1>
+                        </div>
+                    @else
+                        <div class="bg-white height-400 padding-top-50 text-center">
+                            <h1 class="page-search-title">
+                                暂时没有内容…
+                            </h1>
+                        </div>
+                    @endif
+                @else
+                <ul class="blocks-2 blocks-sm-2 blocks-md-4 blocks-xlg-4  met-page-ajax met-grid" id="met-grid" data-scale='0.625'>
+                    @foreach($cp as $v)
+                    <li class="shown">
+                        <div class="widget widget-shadow">
+                            <figure class="widget-header cover">
+                                <a href="{{url('product/showpro/'.$v['id'])}}" title="{{$v['goods_name']}}" target='_self'>
+                                    <div class="mask">
+                                    </div>
+                                    <img class="cover-image" src="{{asset($v['thumb'])}}" alt="{{$v['goods_name']}}" style='height:200px;'>
+                                </a>
+                            </figure>
+                            <h4 class="widget-title">
+                                <a href="{{url('product/showpro/'.$v['id'])}}" title="{{$v['goods_name']}}" target='_self'>{{mb_substr($v['goods_name'],0,12)}}</a>
+                                <p>品牌：{{$v['brand']}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;产地：{{$v['place']}}</p>
+                                <p>香型：{{$v['flavor']}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;规格：{{$v['weight']}}g</p>
+                            </h4>
+                        </div>
+                    </li>
+                    @endforeach
+                </ul>
+                @endif
+                <div style="margin-top:3em">
+                @if($content)
+                {{ $cp->appends(['content' => $content])->links() }}
+                    @else
+                    {{ $cp->links() }}
+                @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@stop
