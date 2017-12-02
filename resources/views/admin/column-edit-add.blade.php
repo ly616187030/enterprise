@@ -118,6 +118,7 @@
                                         <option value="jobs" @if(isset($data->url)&&$data->url=='jobs') selected @endif>招聘信息</option>
                                         <option value="contactus" @if(isset($data->url)&&$data->url=='contact') selected @endif>联系我们</option>
                                         <option value="new" @if(isset($data->url)&&$data->url=='news') selected @endif>咨询中心</option>
+                                        <option value="join-su" @if(isset($data->url)&&$data->url=='join-su') selected @endif>加入我们</option>
                                     </select>
                                 </div>
 

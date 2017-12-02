@@ -16,6 +16,7 @@ Route::group(['middleware' => ['Index.menu']], function () {
     Route::get('/jobs', 'Home\JobController@index');//招聘信息
     Route::post('/jobs', 'Home\JobController@store');//招聘信息提交
     Route::get('/contactus', 'Home\ContactusController@index');//联系我们
+    Route::get('/join-su', 'Home\JoinController@index');//联系我们
 });
 
 

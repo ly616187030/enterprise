@@ -140,42 +140,48 @@
                             <div class="media media-lg">
 
                                 <div class="media-left">
-                                    <a href="{{url('new/shown/'.$v['id'])}}" title="{{$v['title']}}" target='_self'>
+                                    <a href="{{url('new/shown',$v['id'])}}" title="{{$v['title']}}" target='_self'>
                                         <img class="media-object" data-original="{{asset($v['img'])}}?x-oss-process=image/resize,m_fill,h_120,w_200,limit_0" style="display: block;" alt="{{$v['title']}}" src="{{asset($v['img'])}}?x-oss-process=image/resize,m_fill,h_120,w_200,limit_0">
                                     </a>
                                 </div>
 
                                 <div class="media-body">
                                     <h4 class="media-heading">
-                                        <span class="news_time">{{mb_substr($v['release_time'],0,10,'utf8')}}</span>
-                                        <a href="{{url('new/shown/'.$v['id'])}}" title="{{$v['title']}}" target='_self' >
+
+                                        <span class="news_time"><a href="{{url('new/shown',$v['id'])}}">{{mb_substr($v['release_time'],0,10,'utf8')}}</a></span>
+                                        <a href="{{url('new/shown',$v['id'])}}" title="{{$v['title']}}" target='_self' >
                                             {{mb_substr($v['title'],0,15,'utf8')}}
                                         </a>
                                     </h4>
-                                    <p class="des">{{mb_substr($v['dec'],0,20,'utf8').'…'}}</p>
+                                    <a href="{{url('new/shown',$v['id'])}}" title="{{$v['title']}}" target='_self' >
+                                        <p class="des">{{mb_substr($v['dec'],0,20,'utf8').'…'}}</p>
+                                    </a>
                                     <p class="info">
                                     </p>
                                 </div>
                             </div>
                         </li>
-                        @else
+                    @else
                         <li class="invisible animation-delay-300" data-plugin="appear" data-animate="fadeInLeft" data-repeat="false">
                             <div class="media media-lg">
 
                                 <div class="media-left">
-                                    <a href="{{url('new/shown/'.$v['id'])}}" title="{{$v['title']}}" target='_self'>
+                                    <a href="{{url('new/shown',$v['id'])}}" title="{{$v['title']}}" target='_self'>
                                         <img class="media-object" data-original="{{asset($v['img'])}}?x-oss-process=image/resize,m_fill,h_120,w_200,limit_0" style="display: block;" alt="{{$v['title']}}" src="{{asset($v['img'])}}?x-oss-process=image/resize,m_fill,h_120,w_200,limit_0">
                                     </a>
                                 </div>
 
                                 <div class="media-body">
                                     <h4 class="media-heading">
-                                        <span class="news_time">{{mb_substr($v['release_time'],0,10,'utf8')}}</span>
-                                        <a href="{{url('new/shown/'.$v['id'])}}" title="{{$v['title']}}" target='_self' >
+
+                                        <span class="news_time"><a href="{{url('new/shown',$v['id'])}}">{{mb_substr($v['release_time'],0,10,'utf8')}}</a></span>
+                                        <a href="{{url('new/shown',$v['id'])}}" title="{{$v['title']}}" target='_self' >
                                             {{mb_substr($v['title'],0,15,'utf8')}}
                                         </a>
                                     </h4>
-                                    <p class="des">{{mb_substr($v['dec'],0,20,'utf8').'…'}}</p>
+                                    <a href="{{url('new/shown',$v['id'])}}" title="{{$v['title']}}" target='_self' >
+                                        <p class="des">{{mb_substr($v['dec'],0,20,'utf8').'…'}}</p>
+                                    </a>
                                     <p class="info">
                                     </p>
                                 </div>

@@ -51,7 +51,7 @@
                              <label class="col-md-2 control-label">请输入联系地址</label>
                              <input type="text" class="form-control"  name="address" id="address" placeholder="请输入联系地址" value="@if(isset($data->address)){{old('address', $data->address)}}@else{{old('address')}}@endif" />
                         </div>
-
+                         @if($role['edit_'.$dataType] == true || $role['add_'.$dataType] == true)
                         <div class="panel-footer">
                             <button type="submit" class="btn btn-primary save">
 
@@ -59,6 +59,7 @@
 
                             </button>
                         </div>
+                         @endif
 
                     </form>
                 </div>

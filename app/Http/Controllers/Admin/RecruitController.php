@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\RecruitModel;
 use App\Http\Requests\RecruitRequest;
+use Illuminate\Support\Facades\Auth;
+use TCG\Voyager\Facades\Voyager;
+use TCG\Voyager\Models\Permission;
+use DB;
 class RecruitController extends Controller
 {
     /**
@@ -13,12 +17,20 @@ class RecruitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        //
+        $role = [];
+        $slug = explode('.', $request->route()->getName())[0];
+        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->value('name');
+        $da = Permission::where('table_name',$dataType)->get()->toArray();
+        foreach ($da as $v => $n){$permission_id = $n['id'];
+            if(DB::table('permission_role')->where(function($query) use($permission_id){$query->where('permission_id',$permission_id)->where('role_id',Auth::user()['role_id']);})->first()){$sa = true;}else{$sa = false;}$role[$n['key']] = $sa;
+        }
         //
         $data = RecruitModel::where('pid',setting('site.recruit'))->get();
 
-        return view('admin.recruit',['data' => $data]);
+        return view('admin.recruit',['data' => $data,'role' => $role,'dataType' => $dataType]);
     }
 
     /**

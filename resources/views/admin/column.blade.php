@@ -3,9 +3,11 @@
 @section('page_header')
     <h1 class="page-title">
         <i class="voyager-crop"></i> 栏目设置
+        @if($role['add_'.$dataType] == true)
         <a href="{{url('admin/column/create')}}" class="btn btn-success">
             <i class="voyager-plus"></i> 新增栏目
         </a>
+        @endif
     </h1>
 @stop
 
@@ -26,7 +28,9 @@
                                 <th>打开窗口</th>
                                 <th>连接类型</th>
                                 <th>排序</th>
-                                <th>操作</th>
+                                @if($role['edit_'.$dataType] == true || $role['delete_'.$dataType] == true ||$role['read_'.$dataType] == true)
+                                    <th>操作</th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -66,83 +70,87 @@
                                                 @endif
                                             </td>
                                             <td>{{$n->sort}}</td>
+                                            @if($role['edit_'.$dataType] == true || $role['delete_'.$dataType] == true ||$role['read_'.$dataType] == true)
                                             <td>
                                                 <div class="bread_actions">
-
-                                                        <a href="{{url('admin/column/'.$n->id.'/edit')}}"
-                                                           class="btn-sm btn-warning browse_bread">
-                                                            <i class="voyager-edit"></i> 编辑
-                                                        </a>
-
-                                                        <a href="{{url('admin/column-son',$n->id)}}" class="btn-sm btn-info"  style="margin-left: 5px;">
-                                                            <i class="voyager-eye"></i> 子集权限
-                                                        </a>
-
-                                                        <div class="btn-sm btn-danger delete" style="display:inline" data-id="{{ $n->id }}">
-                                                            <i class="voyager-trash"></i> 删除
-                                                        </div>
-
-
-
-                                                </div>
-                                            </td>
-                                        </tr>
+    @if($role['edit_'.$dataType] == true)
+                                                           <a href="{{url('admin/column/'.$n->id.'/edit')}}"
+                                                              class="btn-sm btn-warning browse_bread">
+                                                               <i class="voyager-edit"></i> 编辑
+                                                           </a>
+                                                    @endif
+        @if($role['read_'.$dataType] == true)
+                                                           <a href="{{url('admin/column-son',$n->id)}}" class="btn-sm btn-info"  style="margin-left: 5px;">
+                                                               <i class="voyager-eye"></i> 子集权限
+                                                           </a>
+        @endif
+        @if($role['delete_'.$dataType] == true)
+                                                           <div class="btn-sm btn-danger delete" style="display:inline" data-id="{{ $n->id }}">
+                                                               <i class="voyager-trash"></i> 删除
+                                                           </div>
+        @endif
 
 
-                                        @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+                                                   </div>
+                                               </td>
+                                                   @endif
+                                           </tr>
 
 
-    <div class="modal modal-danger fade" tabindex="-1" id="delete_modal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">
-                        <i class="voyager-trash"></i> 确定要删除此项吗？
-                    </h4>
-                </div>
-                <div class="modal-body">
-                      <p>如果删除此项栏目，将会删除此项栏目下的所有子栏目</p>
-                </div>
-                <div class="modal-footer">
-                    <form action="" id="delete_form" method="POST">
-                        {{ method_field("DELETE") }}
-                        {{ csrf_field() }}
-                        <input type="submit" class="btn btn-danger pull-right delete-confirm" value="删除">
-                    </form>
-                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
+                                           @endforeach
+
+                               </tbody>
+                           </table>
+                       </div>
+                   </div>
+
+               </div>
+           </div>
+       </div>
+
+
+       <div class="modal modal-danger fade" tabindex="-1" id="delete_modal" role="dialog">
+           <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                       </button>
+                       <h4 class="modal-title">
+                           <i class="voyager-trash"></i> 确定要删除此项吗？
+                       </h4>
+                   </div>
+                   <div class="modal-body">
+                         <p>如果删除此项栏目，将会删除此项栏目下的所有子栏目</p>
+                   </div>
+                   <div class="modal-footer">
+                       <form action="" id="delete_form" method="POST">
+                           {{ method_field("DELETE") }}
+                           {{ csrf_field() }}
+                           <input type="submit" class="btn btn-danger pull-right delete-confirm" value="删除">
+                       </form>
+                       <button type="button" class="btn btn-default pull-right" data-dismiss="modal">取消</button>
+                   </div>
+               </div>
+           </div>
+       </div>
 
 
 
 
 
 
-    @endsection
+       @endsection
 
 
-@section('javascript')
-    <script>
-        $('#dataTable').DataTable({!! json_encode(array_merge([ "order" => [],"language" => __('voyager.datatable'),],config('voyager.dashboard.data_tables', [])), true) !!});
-        $('.delete').click(function (e) {
-            var id = $(e.target).data('id');
-            $('#delete_form').attr('action','{{url('admin/column')}}/'+id);
-            $('#delete_modal').modal('show');
-        })
-    </script>
+   @section('javascript')
+       <script>
+           $('#dataTable').DataTable({!! json_encode(array_merge([ "order" => [],"language" => __('voyager.datatable'),],config('voyager.dashboard.data_tables', [])), true) !!});
+           $('.delete').click(function (e) {
+               var id = $(e.target).data('id');
+               $('#delete_form').attr('action','{{url('admin/column')}}/'+id);
+               $('#delete_modal').modal('show');
+           })
+       </script>
 
-    @stop
+       @stop

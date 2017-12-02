@@ -3,9 +3,11 @@
 @section('page_header')
     <h1 class="page-title">
         <i class="voyager-github"></i> 商品设置
-        <a href="{{url('admin/goods/create')}}" class="btn btn-success">
-            <i class="voyager-plus"></i> 新增商品
-        </a>
+        @if($role['add_'.$dataType] == true)
+            <a href="{{url('admin/goods/create')}}" class="btn btn-success">
+                <i class="voyager-plus"></i> 新增商品
+            </a>
+        @endif
     </h1>
 @stop
 
@@ -27,7 +29,9 @@
                                 <th>适用人群</th>
                                 <th>香型</th>
                                 <th>排序</th>
+                                @if($role['edit_'.$dataType] == true || $role['delete_'.$dataType] == true)
                                 <th>操作</th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -42,19 +46,26 @@
                                     <td>{{$n->gender}}</td>
                                     <td>{{$n->flavor}}</td>
                                     <td>{{$n->sort}}</td>
+                                    @if($role['edit_'.$dataType] == true || $role['delete_'.$dataType] == true)
                                     <td>
                                         <div class="bread_actions">
+                                             @if($role['edit_'.$dataType] == true)
 
-                                            <a href="{{url('admin/goods/'.$n->id.'/edit')}}"
-                                               class="btn-sm btn-warning browse_bread">
-                                                <i class="voyager-edit"></i> 编辑
-                                            </a>
+                                                <a href="{{url('admin/goods/'.$n->id.'/edit')}}"
+                                                   class="btn-sm btn-warning browse_bread">
+                                                    <i class="voyager-edit"></i> 编辑
+                                                </a>
+
+                                                 @endif
+                                                 @if($role['delete_'.$dataType] == true)
                                             <div class="btn-sm btn-danger delete" style="display:inline" data-id="{{ $n->id }}">
                                                 <i class="voyager-trash"></i> 删除
                                             </div>
+                                                 @endif
 
                                         </div>
                                     </td>
+                                    @endif
                                 </tr>
 
                                 @endforeach

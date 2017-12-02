@@ -3,9 +3,11 @@
 @section('page_header')
     <h1 class="page-title">
         <i class="voyager-pie-chart"></i> 步骤流程
+        @if($role['add_'.$dataType] == true)
         <a href="{{url('admin/step/create')}}" class="btn btn-success">
             <i class="voyager-plus"></i> 新增步骤
         </a>
+        @endif
     </h1>
 
     {{--<link rel="stylesheet" type="text/css" href="/step/css/index-debug.css">--}}
@@ -58,7 +60,9 @@
                                 <th>背景颜色</th>
                                 <th>连接地址</th>
                                 <th>排序</th>
-                                <th>操作</th>
+                                @if($role['edit_'.$dataType] == true  || $role['delete_'.$dataType] == true)
+                                    <th>操作</th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -71,19 +75,24 @@
                                         <td>{{$n->color}}</td>
                                         <td>{{$n->href}}</td>
                                         <td>{{$n->sort}}</td>
+                                        @if($role['edit_'.$dataType] == true || $role['delete_'.$dataType] == true)
                                         <td>
                                             <div class="bread_actions">
-
+                                                @if($role['edit_'.$dataType] == true)
                                                 <a href="{{url('admin/step/'.$n->id.'/edit')}}"
                                                    class="btn-sm btn-warning browse_bread">
                                                     <i class="voyager-edit"></i> 编辑
                                                 </a>
+                                                @endif
+                                                    @if($role['delete_'.$dataType] == true)
                                                 <div class="btn-sm btn-danger delete" style="display:inline" data-id="{{ $n->id }}">
                                                     <i class="voyager-trash"></i> 删除
                                                 </div>
+                                                    @endif
 
                                             </div>
                                         </td>
+                                            @endif
                                     </tr>
 
                                     @endforeach

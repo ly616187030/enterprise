@@ -8,6 +8,9 @@ use App\Model\NavModel;
 use App\Model\NewsModel;
 use App\Http\Requests\NewsRequest;
 use Illuminate\Support\Facades\Auth;
+use TCG\Voyager\Facades\Voyager;
+use TCG\Voyager\Models\Permission;
+use DB;
 class NewsController extends Controller
 {
     /**
@@ -15,8 +18,16 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        //
+        $role = [];
+        $slug = explode('.', $request->route()->getName())[0];
+        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->value('name');
+        $da = Permission::where('table_name',$dataType)->get()->toArray();
+        foreach ($da as $v => $n){$permission_id = $n['id'];
+            if(DB::table('permission_role')->where(function($query) use($permission_id){$query->where('permission_id',$permission_id)->where('role_id',Auth::user()['role_id']);})->first()){$sa = true;}else{$sa = false;}$role[$n['key']] = $sa;
+        }
         //
         $id = [];
 
@@ -30,7 +41,7 @@ class NewsController extends Controller
 
         $data = NewsModel::whereIn('pid',$id)->get();
 
-        return view('admin.news',['data' => $data]);
+        return view('admin.news',['data' => $data,'role' => $role,'dataType' => $dataType]);
     }
 
     /**

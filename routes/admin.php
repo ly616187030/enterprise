@@ -22,6 +22,7 @@ Route::group(['middleware' => 'admin.user', 'namespace' => 'Admin'], function ()
     Route::resource('carousel', 'CarouselController');
     Route::resource('personnel', 'PermissionController');
     Route::resource('step', 'StepController');
+    Route::resource('join-us', 'JoinController');
 
 
 });
