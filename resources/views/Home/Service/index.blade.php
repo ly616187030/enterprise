@@ -6,7 +6,7 @@
 @section('main')
     <div class="met-banner " data-height='300||'>
         <div class="slick-slide">
-            <img class="cover-image" src="{{asset($nav['header_pic'])}}" srcset='{{asset($nav['header_pic'])}}&x=767 500w,{{asset($nav['header_pic'])}}' sizes="(max-width: 767px) 500px" alt="">
+            <img class="cover-image" src="{{asset($nav['header_pic'])}}" srcset='{{asset($nav['header_pic'])}}?&x=767 500w,{{asset($nav['header_pic'])}}' sizes="(max-width: 767px) 500px" alt="">
             <div class="banner-text p-5">
                 <div class='container'>
                     <div class='banner-text-con'>

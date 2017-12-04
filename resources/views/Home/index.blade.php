@@ -4,6 +4,7 @@
 @section('keywords','关键字')
 
 @section('main')
+
     {{--BANNER S--}}
     <div class="met-banner " data-height='||'>
         @if(count($lunbo)!=0)

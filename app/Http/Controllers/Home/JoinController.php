@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\JoinUsModel;
 use App\Model\NavModel;
+use App\Model\StepModel;
 class JoinController extends Controller
 {
     //
@@ -20,6 +21,10 @@ class JoinController extends Controller
 
         $nav = NavModel::where('id', $new)->first();
         $con =  JoinUsModel::first();
-        return view('Home.Join.index',compact('nav','active','con'));
+
+
+        //首页步骤
+        $step = StepModel::orderBy('sort','ASC')->get();
+        return view('Home.Join.index',compact('nav','active','con','step'));
     }
 }

@@ -83,12 +83,14 @@
                                                                 {{$v['title']}}
                                                             </a>
                                                         </h4>
+                                                        <a href="{{url('service/shown/'.$v['id'])}}" title="{{$v['title']}}" target='_self'>
                                                         <p class="des">{{mb_substr($v['dec'],0,45,'utf8').'...'}}</p>
                                                         <p class="info">
                                                             <span>{{mb_substr($v['release_time'],0,10,'utf8')}}</span>
                                                             <span>{{$v['people']}}</span>
                                                             <span><i class="icon wb-eye margin-right-5" aria-hidden="true"></i>{{$v['preview_quantity']}}</span>
                                                         </p>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </li>

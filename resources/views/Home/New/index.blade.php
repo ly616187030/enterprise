@@ -43,7 +43,7 @@
     @else
         <div class="met-banner " data-height='300||'>
             <div class="slick-slide">
-                <img class="cover-image" src="{{asset($nav['header_pic'])}}" srcset='{{asset($nav['header_pic'])}}&x=767 500w,{{asset($nav['header_pic'])}}' sizes="(max-width: 767px) 500px" alt="">
+                <img class="cover-image" src="{{asset($nav['header_pic'])}}" srcset='{{asset($nav['header_pic'])}}?&x=767 500w,{{asset($nav['header_pic'])}}' sizes="(max-width: 767px) 500px" alt="">
                 <div class="banner-text p-5">
                     <div class='container'>
                         <div class='banner-text-con'>
@@ -81,12 +81,14 @@
                                                                 {{$v['title']}}
                                                             </a>
                                                         </h4>
+                                                        <a href="{{url('service/shown/'.$v['id'])}}" title="{{$v['title']}}" target='_self'>
                                                         <p class="des">{{mb_substr($v['dec'],0,45,'utf8').'...'}}</p>
                                                         <p class="info">
                                                             <span>{{mb_substr($v['release_time'],0,10,'utf8')}}</span>
                                                             <span>{{$v['people']}}</span>
                                                             <span><i class="icon wb-eye margin-right-5" aria-hidden="true"></i>{{$v['preview_quantity']}}</span>
                                                         </p>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </li>
